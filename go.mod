@@ -1,4 +1,4 @@
-module newtester
+module github.com/ppcamp/e2e-testing
 
 go 1.20
 

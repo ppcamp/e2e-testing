@@ -4,7 +4,7 @@ import (
 	"os"
 	"testing"
 
-	"newtester/config"
+	"github.com/ppcamp/e2e-testing/config"
 
 	"github.com/cucumber/godog"
 	"github.com/spf13/pflag"

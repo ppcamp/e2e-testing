@@ -1,11 +1,9 @@
-// go install github.com/playwright-community/playwright-go/cmd/playwright
-// playwright install --with-deps
-
 package support
 
 import (
 	"fmt"
-	"newtester/config"
+
+	"github.com/ppcamp/e2e-testing/config"
 
 	"github.com/playwright-community/playwright-go"
 )

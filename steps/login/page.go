@@ -2,9 +2,10 @@ package login
 
 import (
 	"fmt"
-	"newtester/config"
-	"newtester/support"
 	"time"
+
+	"github.com/ppcamp/e2e-testing/config"
+	"github.com/ppcamp/e2e-testing/support"
 )
 
 const (

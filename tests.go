@@ -1,8 +1,8 @@
 package main
 
 import (
-	"newtester/steps/login"
-	"newtester/support"
+	"github.com/ppcamp/e2e-testing/steps/login"
+	"github.com/ppcamp/e2e-testing/support"
 
 	"github.com/cucumber/godog"
 )
