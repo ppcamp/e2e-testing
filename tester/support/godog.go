@@ -52,6 +52,7 @@ func Setup(ctx *godog.ScenarioContext) {
 		if err != nil {
 			log.WithError(err).WithField("Step", st.Text)
 		}
+
 		return ctx, err
 	})
 }

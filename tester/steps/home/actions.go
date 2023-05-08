@@ -11,6 +11,7 @@ const (
 	xpathTextfield string = `//*[@type='search']`
 )
 
+// launchHomePage and await until network kiddle event
 func launchHomePage(reporter support.Reporter) error {
 	if err := reporter.Get(config.SiteURL); err != nil {
 		return fmt.Errorf("couldn't navigate to login url: %v", err)
