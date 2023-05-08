@@ -25,9 +25,9 @@ func playwrightInstance() (*instance, error) {
 	}
 
 	option := playwright.BrowserTypeLaunchOptions{
-		Channel:  playwright.String(config.Browser),
-		Headless: playwright.Bool(config.Headless),
-		//SlowMo:   playwright.Float(100),
+		Channel:  &config.Browser,
+		Headless: &config.Headless,
+		Args:     config.ChromiumArgs,
 	}
 
 	browser, err := pw.Chromium.Launch(option)

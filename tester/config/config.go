@@ -15,6 +15,7 @@ var (
 	Headless         bool   = false
 	ScreenShotFolder string = "../images"
 	IsTest           bool   = false
+	ChromiumArgs            = []string{}
 )
 
 func init() {
@@ -30,15 +31,19 @@ func init() {
 func readEnv() {
 	// try to load those values from environment
 	if v, ok := os.LookupEnv(`TEST_SITE`); ok {
-		SiteURL = v
+		SiteURL = strings.Trim(v, " ")
 	}
 
 	if v, ok := os.LookupEnv(`TEST_BROWSER`); ok {
-		Browser = v
+		Browser = strings.Trim(v, " ")
 	}
 
 	if v, ok := os.LookupEnv(`TEST_SCREENSHOT_FOLDER`); ok {
-		ScreenShotFolder = v
+		ScreenShotFolder = strings.Trim(v, " ")
+	}
+
+	if v, ok := os.LookupEnv(`TEST_CHROMIUM_ARGS`); ok {
+		ChromiumArgs = strings.Split(strings.Trim(v, " "), " ")
 	}
 
 	if v, ok := os.LookupEnv(`TEST_HEADLESS`); ok {
