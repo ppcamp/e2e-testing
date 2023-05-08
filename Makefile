@@ -21,6 +21,7 @@ REGEX_FEATURE_TAG = ^.*@(.*)[\s]*$$
 REGEX_COLUMN_SEP = :
 REGEX_MAKEFILE_DOC = ^([a-zA-Z_-]+):.* \#\# (.*)$$
 REGEX_MD_ITALIC = \*{1}([a-zA-Z0-9=\_\ \-]+)\*{1}
+REGEX_MD_UNDERLINE = \_{1}([a-zA-Z0-9=\_\ \-]+)\_{1}
 REGEX_MD_BOLD = \*{2}([a-zA-Z0-9=\_\ \-]+)\*{2}
 REGEX_MD_MONO = `([a-zA-Z0-9=\_\ \-]+)`
 REGEX_MD_LINK = \[([a-zA-Z0-9=\_\ \-]+)\]
@@ -83,6 +84,7 @@ check_bash_version:
 
 install: install-go ## Install [everything]
 install-go: install-go-pkgs install-go-extra-deps
+run: drop_files go_run ## Run the tester (*godog*, *playwright* and _generate report_)
 test: go_test ## Run the unitary tests
 
 
@@ -100,7 +102,7 @@ install-go-extra-deps: ## [GO] install all dependencies packages (*tools*)
 
 
 .ONESHELL:
-go_run: ## Run the godog test suite. Type `make example`.
+go_run: ## [GO] Run the godog test suite. Type `make example`.
 	@printf "Running Go test suite: $(FEATURES_FOLDER)/$(TEST_TAGS)\n\n"
 	@cd $(TESTER_FOLDER)
 	@go test \
@@ -130,6 +132,7 @@ go_test: ## [GO] run unitary tests
 		sed -En 's/^RUN/$(F0)\0$(LD)/g;p' | \
 		sed -En 's/^PASS:/  $(F2)PASS:$(LD)/g;p' | \
 		sed -En 's/^FAIL/ $(F1)PASS$(LD)/g;p'
+
 
 .ONESHELL:
 list: ## List all available tags under the feature files
@@ -172,7 +175,8 @@ help:
     # 5. colour brackets ([])
     # 6. make it bold
     # 7. make it italic
-    # 8. show as table
+    # 8. make it underline
+    # 9. show as table
 	@cat $(MAKEFILE_LIST) | \
 	 	grep -E "$(REGEX_MAKEFILE_DOC)" | \
 		sed -En 's/$(REGEX_MAKEFILE_DOC)/$(F2)\1$(REGEX_COLUMN_SEP)$(LD)\2/p' | \
@@ -180,5 +184,6 @@ help:
 		sed -En 's/$(REGEX_MD_LINK)/$(F6)\1$(LD)/g;p' | \
 		sed -En 's/$(REGEX_MD_BOLD)/$(LB)\1$(LD)/g;p' | \
 		sed -En 's/$(REGEX_MD_ITALIC)/$(FI)\1$(LD)/g;p' | \
+		sed -En 's/$(REGEX_MD_UNDERLINE)/$(FU)\1$(LD)/g;p' | \
 		column -t -s "$(REGEX_COLUMN_SEP)"
 
