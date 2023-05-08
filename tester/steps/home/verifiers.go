@@ -1,6 +1,8 @@
 package home
 
 import (
+	"time"
+
 	"github.com/ppcamp/e2e-testing/support"
 )
 
@@ -12,5 +14,6 @@ func verifyTitle(reporter support.Reporter) error {
 	// if err := common.VerifyTitle(reporter, expectedTitle); err != nil {
 	// 	return err
 	// }
+	time.Sleep(1 * time.Second) // simulating some check
 	return nil
 }
