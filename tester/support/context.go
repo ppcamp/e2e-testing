@@ -30,17 +30,21 @@ func fromContext(ctx context.Context) (Reporter, error) {
 	return v, nil
 }
 
-type StepFunc func(Reporter) error
-type GodogStepFunc func(ctx context.Context) error
-
 // WithReporter is a decorator used to retrieve Reporter from the context and pass it as argument
 // to the step functions.
-func WithReporter(fn StepFunc) GodogStepFunc {
+func WithReporter(fn StepFunc) godogStepFunc {
 	return func(ctx context.Context) error {
 		reporter, err := fromContext(ctx)
 		if err != nil {
 			return err
 		}
 		return fn(reporter)
+	}
+}
+
+// WithoutParam is a decorator to ignore the ctx parameter
+func WithoutParam(fn func() error) godogStepFunc {
+	return func(_ context.Context) error {
+		return fn()
 	}
 }

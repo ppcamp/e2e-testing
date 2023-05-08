@@ -15,7 +15,6 @@ const (
 )
 
 func launchHomePage(reporter support.Reporter) error {
-	fmt.Println("home page")
 	if err := reporter.Get(config.SiteURL); err != nil {
 		return fmt.Errorf("couldn't navigate to login url: %v", err)
 	}

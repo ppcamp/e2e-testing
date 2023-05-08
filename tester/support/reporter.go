@@ -1,8 +1,6 @@
 package support
 
 import (
-	"fmt"
-
 	"github.com/playwright-community/playwright-go"
 )
 
@@ -23,9 +21,8 @@ type Reporter interface {
 }
 
 func (s *implReporter) Get(url string) error {
-	r, err := s.Goto(url, playwright.PageGotoOptions{WaitUntil: playwright.WaitUntilStateNetworkidle})
+	_, err := s.Goto(url, playwright.PageGotoOptions{WaitUntil: playwright.WaitUntilStateNetworkidle})
 	if err != nil {
-		fmt.Println("r", r)
 		return err
 	}
 	return nil
