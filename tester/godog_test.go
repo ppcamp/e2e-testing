@@ -13,8 +13,8 @@ import (
 func TestMain(m *testing.M) {
 	opts := godog.Options{
 		Format:      "pretty",
-		Paths:       []string{"Features"},
-		Concurrency: config.Concurrency,
+		Paths:       []string{"features"},
+		Concurrency: int(config.Concurrency),
 	}
 
 	godog.BindCommandLineFlags("godog.", &opts)

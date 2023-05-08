@@ -3,6 +3,8 @@ default: check_bash_version help
 # Env
 TEST_SITE := https://www.globo.com/
 TEST_BROWSER := msedge
+TEST_HEADLESS := true
+TEST_THREAD := 1
 TEST_TAGS :=
 TEST_OUT_JSON := report.json
 

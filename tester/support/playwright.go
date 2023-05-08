@@ -18,8 +18,8 @@ func playwrightInstance() (playwright.Browser, playwright.Page, error) {
 	}
 
 	option := playwright.BrowserTypeLaunchOptions{
-		Channel:  playwright.String(config.MauiBrowser),
-		Headless: playwright.Bool(config.MauiHeadless),
+		Channel:  playwright.String(config.Browser),
+		Headless: playwright.Bool(config.Headless),
 		//SlowMo:   playwright.Float(100),
 	}
 
