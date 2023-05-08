@@ -1,11 +1,10 @@
 package main
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/ppcamp/e2e-testing/config"
-	"github.com/sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
 
 	"github.com/cucumber/godog"
 	"github.com/spf13/pflag"
@@ -42,11 +41,11 @@ func TestMain(m *testing.M) {
 
 func TestFeatures(t *testing.T) {
 	if config.IsTest {
-		fmt.Println("test")
+		log.Info("is running a test")
 		t.Skip()
 	}
 
-	logrus.WithFields(logrus.Fields{
+	log.WithFields(log.Fields{
 		"Concurrency":   opts.Concurrency,
 		"Paths":         opts.Paths,
 		"Format":        opts.Format,

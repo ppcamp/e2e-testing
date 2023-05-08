@@ -9,6 +9,7 @@ export TEST_TAGS :=
 export TEST_OUT_JSON := report.json
 export TEST_SCREENSHOT_FOLDER := ../images
 export TEST_IS_TEST := false
+export TEST_LOG_LEVEL := error
 # Wsl seems to use wayland for ubuntu, but this seems to fail for chromium
 # see https://github.com/microsoft/WSL/issues/7896#issuecomment-1264252335
 export TEST_CHROMIUM_ARGS := $(shell [ "$$(grep -i WSL /proc/version)" ] && echo '--enable-features=UseOzonePlatform --ozone-platform=wayland')
