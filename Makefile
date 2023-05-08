@@ -10,7 +10,8 @@ TEST_OUT_JSON := report.json
 # Inner vars
 SHELL := /bin/bash
 ESC = \x1b
-FEATURES_FOLDER := features
+TESTER_FOLDER := tester
+FEATURES_FOLDER := $(TESTER_FOLDER)/features
 
 REGEX_FEATURE_TAG = ^.*@(.*)[\s]*$$
 REGEX_COLUMN_SEP = :
@@ -81,8 +82,10 @@ install-go: install-go-pkgs install-go-extra-deps
 run: drop_files go_run ## Run the tests
 
 
+.ONESHELL:
 install-go-pkgs: ## [GO] install all dependencies packages
 	@echo "Installing GO deps"
+	@cd $(TESTER_FOLDER)
 	@go get -u -t && go mod tidy
 	@go work sync
 
