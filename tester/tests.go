@@ -8,11 +8,7 @@ import (
 )
 
 func InitializeScenario(ctx *godog.ScenarioContext) {
-	ctx.Before(support.BeforeScenario)
-	ctx.After(support.AfterScenario)
+	support.Setup(ctx)
 
-	step := ctx.StepContext()
-	step.Before(support.BeforeStep)
-
-	ctx.Step(`^I launch the test site$`, support.WithReporter(login.LaunchHomePage))
+	login.Register(ctx)
 }

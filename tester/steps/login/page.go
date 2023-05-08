@@ -14,7 +14,7 @@ const (
 	textInput      string = `search in google`
 )
 
-func LaunchHomePage(reporter support.Reporter) error {
+func launchHomePage(reporter support.Reporter) error {
 	fmt.Println("home page")
 	if err := reporter.Get(config.MauiLocal); err != nil {
 		return fmt.Errorf("couldn't navigate to login url: %v", err)
