@@ -4,6 +4,7 @@ default: check_bash_version help
 TEST_SITE := https://www.globo.com/
 TEST_BROWSER := msedge
 TEST_TAGS :=
+TEST_OUT_JSON := report.json
 
 
 # Inner vars
@@ -76,18 +77,33 @@ check_bash_version:
 
 
 install: install-go ## Install [everything]
-install-go: install-go-pkgs install-go-extra-deps ## [GO] install all deps and tools
+install-go: install-go-pkgs install-go-extra-deps
+run: drop_files go_run ## Run the tests
 
 
 install-go-pkgs: ## [GO] install all dependencies packages
 	@echo "Installing GO deps"
 	@go get -u -t && go mod tidy
-
+	@go work sync
 
 install-go-extra-deps: ## [GO] install all dependencies packages (*tools*)
 	@echo "Installing Playwright (browser deps)"
 	@go install github.com/playwright-community/playwright-go/cmd/playwright@latest
-	@playwright install --with-deps $(MAUI_TEST_BROWSER)
+	@playwright install --with-deps $(TEST_BROWSER)
+
+
+go_run: ## Run the godog test suite. Type `make example`.
+	@echo "Running Go test suite: $(FEATURES_FOLDER)/$(TEST_TAGS)"
+	go test tester/ \
+		-timeout 0 \
+		--godog.tags=$(TEST_TAGS) \
+		--godog.format=pretty,cucumber:$(TEST_OUT_JSON) \
+		-- $(FEATURES_FOLDER)
+
+
+drop_files:
+	@echo "Dropping files"
+	@rm -f $(TEST_OUT_JSON)
 
 
 list: ## List all available tags under the feature files
@@ -120,14 +136,14 @@ example: ## Show some example cases
 
 help:
 	@printf "$(FF) Available methods: $(LD)\n\n"
-        # 1. read makefile
-        # 2. get lines that can have a method description
-        # 3. color method names and add a COLUMN_SEPARATOR
-        # 4. colour backticks (``)
-        # 5. colour brackets ([])
-        # 6. make it bold
-        # 7. make it italic
-        # 8. show as table
+    # 1. read makefile
+    # 2. get lines that can have a method description
+    # 3. color method names and add a COLUMN_SEPARATOR
+    # 4. colour backticks (``)
+    # 5. colour brackets ([])
+    # 6. make it bold
+    # 7. make it italic
+    # 8. show as table
 	@cat $(MAKEFILE_LIST) | \
 	 	grep -E "$(REGEX_MAKEFILE_DOC)" | \
 		sed -En 's/$(REGEX_MAKEFILE_DOC)/$(F2)\1$(REGEX_COLUMN_SEP)$(LD)\2/p' | \
