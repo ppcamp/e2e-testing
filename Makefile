@@ -112,6 +112,7 @@ drop_files:
 	@rm -f $(TEST_OUT_JSON)
 
 
+.ONESHELL:
 list: ## List all available tags under the feature files
     # 1. list features
     # 2. print the current feature file
@@ -120,6 +121,7 @@ list: ## List all available tags under the feature files
     # 5. get only the flag name
     # 6. sort and remove duplicates
     # 7. print a double line to split between tag files
+	@cd $(TESTER_FOLDER)
 	@for file in `ls $(FEATURES_FOLDER)`; do \
 		printf "$(F2)Flags for $${file%.feature}: $(LD) \n"; \
 		cat $(FEATURES_FOLDER)/$$file | \
