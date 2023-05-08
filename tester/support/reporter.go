@@ -7,17 +7,27 @@ import (
 type implReporter struct {
 	playwright.Page
 	browser playwright.Browser
+	pw      *playwright.Playwright
 }
 
-// type playwrightMinimum interface {
-// 	Type(text string, options ...playwright.PageTypeOptions) error
-// 	Locator(selector string, options ...playwright.PageLocatorOptions) (playwright.Locator, error)
-// 	Click(selector string, options ...playwright.PageClickOptions) error
-// }
-
 type Reporter interface {
+	// Get is like a Goto with waituntil attached
 	Get(url string) error
+
+	// CloseAll connections and playwright support (clear scenario)
+	CloseAll() error
+
 	playwright.Page
+}
+
+func (s *implReporter) CloseAll() error {
+	err := s.browser.Close()
+	if err != nil {
+		return err
+	}
+
+	err = s.pw.Stop()
+	return err
 }
 
 func (s *implReporter) Get(url string) error {

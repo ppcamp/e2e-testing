@@ -8,13 +8,19 @@ import (
 	"github.com/playwright-community/playwright-go"
 )
 
+type instance struct {
+	pw      *playwright.Playwright
+	browser playwright.Browser
+	page    playwright.Page
+}
+
 // playwrightInstance creates and return the playwright page and browser.
 // Usually this function is called before every scenario.
 // This function will use the chromium base, so it'll only work for browser chromium based
-func playwrightInstance() (playwright.Browser, playwright.Page, error) {
+func playwrightInstance() (*instance, error) {
 	pw, err := playwright.Run()
 	if err != nil {
-		return nil, nil, fmt.Errorf("could not start playwright: %v", err)
+		return nil, fmt.Errorf("could not start playwright: %v", err)
 	}
 
 	option := playwright.BrowserTypeLaunchOptions{
@@ -25,13 +31,13 @@ func playwrightInstance() (playwright.Browser, playwright.Page, error) {
 
 	browser, err := pw.Chromium.Launch(option)
 	if err != nil {
-		return nil, nil, fmt.Errorf("could not launch browser: %v", err)
+		return nil, fmt.Errorf("could not launch browser: %v", err)
 	}
 
 	page, err := browser.NewPage()
 	if err != nil {
-		return nil, nil, fmt.Errorf("could not create page: %v", err)
+		return nil, fmt.Errorf("could not create page: %v", err)
 	}
 
-	return browser, page, nil
+	return &instance{pw, browser, page}, nil
 }

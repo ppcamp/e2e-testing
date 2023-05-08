@@ -11,12 +11,12 @@ type reporterType struct{}
 
 // contextWithReporter creates a new reporter and returns a new context with this value embeded
 func contextWithReporter(ctx context.Context) (context.Context, error) {
-	browser, page, err := playwrightInstance()
+	instance, err := playwrightInstance()
 	if err != nil {
 		return ctx, err
 	}
 
-	reporter := &implReporter{page, browser}
+	reporter := &implReporter{instance.page, instance.browser, instance.pw}
 	return context.WithValue(ctx, ReporterKey, reporter), nil
 }
 
