@@ -1,2 +1,6 @@
-*.html
-*.json
+# ignore output files
+**.html
+**.json
+
+# ignore any images in this repo
+**.png
