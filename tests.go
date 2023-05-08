@@ -14,5 +14,5 @@ func InitializeScenario(ctx *godog.ScenarioContext) {
 	step := ctx.StepContext()
 	step.Before(support.BeforeStep)
 
-	ctx.Step(`^I Launch the maui local and login as Admin$`, support.WithReporter(login.LaunchHomePage))
+	ctx.Step(`^I launch the test site$`, support.WithReporter(login.LaunchHomePage))
 }
