@@ -10,8 +10,8 @@ TEST_OUT_JSON := report.json
 # Inner vars
 SHELL := /bin/bash
 ESC = \x1b
-TESTER_FOLDER := tester
-FEATURES_FOLDER := $(TESTER_FOLDER)/features
+TESTER_FOLDER = tester
+FEATURES_FOLDER = features
 
 REGEX_FEATURE_TAG = ^.*@(.*)[\s]*$$
 REGEX_COLUMN_SEP = :
@@ -95,17 +95,18 @@ install-go-extra-deps: ## [GO] install all dependencies packages (*tools*)
 	@playwright install --with-deps $(TEST_BROWSER)
 
 
+.ONESHELL:
 go_run: ## Run the godog test suite. Type `make example`.
-	@echo "Running Go test suite: $(FEATURES_FOLDER)/$(TEST_TAGS)"
-	go test tester/ \
+	@printf "Running Go test suite: $(FEATURES_FOLDER)/$(TEST_TAGS)\n\n"
+	@cd $(TESTER_FOLDER)
+	@go test \
 		-timeout 0 \
 		--godog.tags=$(TEST_TAGS) \
-		--godog.format=pretty,cucumber:$(TEST_OUT_JSON) \
+		--godog.format=pretty,cucumber:../$(TEST_OUT_JSON) \
 		-- $(FEATURES_FOLDER)
 
 
 drop_files:
-	@echo "Dropping files"
 	@rm -f $(TEST_OUT_JSON)
 
 
