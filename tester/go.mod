@@ -5,6 +5,7 @@ go 1.20
 require (
 	github.com/cucumber/godog v0.12.6
 	github.com/playwright-community/playwright-go v0.2000.1
+	github.com/sirupsen/logrus v1.9.0
 	github.com/spf13/pflag v1.0.5
 )
 
@@ -17,7 +18,6 @@ require (
 	github.com/hashicorp/go-immutable-radix v1.3.1 // indirect
 	github.com/hashicorp/go-memdb v1.3.4 // indirect
 	github.com/hashicorp/golang-lru v0.5.4 // indirect
-	github.com/sirupsen/logrus v1.9.0 // indirect
-	golang.org/x/sys v0.0.0-20220715151400-c0bba94af5f8 // indirect
+	golang.org/x/sys v0.8.0 // indirect
 	gopkg.in/square/go-jose.v2 v2.6.0 // indirect
 )
