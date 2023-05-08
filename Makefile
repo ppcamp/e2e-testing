@@ -134,10 +134,12 @@ example: ## Show some example cases
 	@printf "$(F3)Example: $(LD) \n"
 	@printf "$(F6) export$(LD) TEST_SITE=http://localhost:5000/ \n"
 	@printf "$(F6) export$(LD) TEST_BROWSER=msedge \n"
-	@printf "$(F6) export$(LD) TEST_TAGS=open \n"
+	@printf "$(F6) export$(LD) TEST_TAGS=@open \n"
 	@printf "$(F6) make $(LD)run \n"
 	@printf "$(FF)OR: $(LD) \n"
 	@printf " TEST_SITE=http://localhost:5000 $(F6)make$(LD) run \n"
+	@printf "$(FF)OR (to not run some scenario): $(LD) \n"
+	@printf " TEST_TAGS=~@open $(F6)make$(LD) run \n"
 
 
 help:
