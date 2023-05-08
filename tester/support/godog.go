@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/cucumber/godog"
+	"github.com/ppcamp/e2e-testing/config"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -31,6 +32,8 @@ func Setup(ctx *godog.ScenarioContext) {
 		if err != nil {
 			return ctx, fmt.Errorf("fail to retrieve reporter %w", err)
 		}
+
+		ScreenShot(r, fmt.Sprintf("%s/%s.png", config.ScreenShotFolder, sc.Id))
 
 		if err2 := r.CloseAll(); err2 != nil {
 			return ctx, err2

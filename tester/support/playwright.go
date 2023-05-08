@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/ppcamp/e2e-testing/config"
+	"github.com/sirupsen/logrus"
 
 	"github.com/playwright-community/playwright-go"
 )
@@ -39,5 +40,16 @@ func playwrightInstance() (*instance, error) {
 		return nil, fmt.Errorf("could not create page: %v", err)
 	}
 
+	page.SetViewportSize(1920, 1080)
+
 	return &instance{pw, browser, page}, nil
+}
+
+func ScreenShot(page playwright.Page, path string) error {
+	fmt.Println("debug", path)
+	_, err := page.Screenshot(playwright.PageScreenshotOptions{Path: playwright.String(path)})
+	if err != nil {
+		logrus.WithError(err).Error("fail to save image ", path)
+	}
+	return err
 }

@@ -4,17 +4,25 @@ import (
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/sirupsen/logrus"
 )
 
 var (
-	Concurrency uint32 = 0 // 0 also evals to 1
-	SiteURL     string = "https://www.google.com"
-	Browser     string = "chrome"
-	Headless    bool   = false
+	Concurrency      uint32 = 0 // 0 also evals to 1
+	SiteURL          string = "https://www.google.com"
+	Browser          string = "chrome"
+	Headless         bool   = false
+	ScreenShotFolder string = "../images"
 )
 
 func init() {
 	readEnv() // allow to pass over env
+
+	err := os.MkdirAll(ScreenShotFolder, os.ModePerm)
+	if err != nil {
+		logrus.Panic(err)
+	}
 }
 
 // readEnv will load values from args, if passed, othewerise, it'll keep the original values
