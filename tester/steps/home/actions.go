@@ -2,7 +2,6 @@ package home
 
 import (
 	"fmt"
-	"time"
 
 	"github.com/ppcamp/e2e-testing/config"
 	"github.com/ppcamp/e2e-testing/support"
@@ -10,8 +9,6 @@ import (
 
 const (
 	xpathTextfield string = `//*[@type='search']`
-	xpathButton    string = `//*[@value="Pesquisa Google"]`
-	textInput      string = `search in google`
 )
 
 func launchHomePage(reporter support.Reporter) error {
@@ -19,23 +16,33 @@ func launchHomePage(reporter support.Reporter) error {
 		return fmt.Errorf("couldn't navigate to login url: %v", err)
 	}
 
-	time.Sleep(1 * time.Second)
+	return nil
+}
+
+func enterWithText(reporter support.Reporter) error {
+	textInput := `google`
 
 	locator, err := reporter.Locator(xpathTextfield)
 	if err != nil {
 		return err
 	}
-	locator.TextContent()
 
-	if err := locator.Type(textInput); err != nil {
+	return locator.Type(textInput)
+}
+
+func enterWithTextGlobo(reporter support.Reporter) error {
+	textInput := `globo`
+
+	locator, err := reporter.Locator(xpathTextfield)
+	if err != nil {
 		return err
 	}
-	time.Sleep(1 * time.Second)
 
-	if err := reporter.Click(xpathButton); err != nil {
-		return err
-	}
+	return locator.Type(textInput)
+}
 
-	time.Sleep(2 * time.Second)
-	return nil
+func clickButton(reporter support.Reporter) error {
+	xpathButton := `//*[@value="Pesquisa Google"]`
+
+	return reporter.Click(xpathButton)
 }

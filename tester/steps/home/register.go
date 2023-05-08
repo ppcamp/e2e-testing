@@ -7,5 +7,8 @@ import (
 
 func Register(ctx *godog.ScenarioContext) {
 	ctx.Step(`^I launch the home page$`, support.WithReporter(launchHomePage))
-	ctx.Step(`^Verify the page title$`, support.WithReporter(verifyTitle))
+	ctx.Step(`^I enter with text globo$`, support.WithReporter(enterWithText))
+	ctx.Step(`^I enter with text msn$`, support.WithReporter(enterWithText))
+	ctx.Step(`^I hit the search button$`, support.WithReporter(clickButton))
+	ctx.Step(`^Verify the page title`, support.WithReporter(verifyTitle))
 }

@@ -4,11 +4,13 @@ import (
 	"github.com/ppcamp/e2e-testing/support"
 )
 
+// verifyTitle
+// TODO: check for the regexes to allow passing a variable from the feature file
+// SEE https://github.com/cucumber/godog
 func verifyTitle(reporter support.Reporter) error {
-	// expectedTitle := "Google"
+	// expectedTitle := " - Google Search"
 	// if err := common.VerifyTitle(reporter, expectedTitle); err != nil {
 	// 	return err
 	// }
-
 	return nil
 }
