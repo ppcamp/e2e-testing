@@ -1,6 +1,12 @@
 default: check_bash_version help
 
-# Variables
+# Env
+TEST_SITE := https://www.globo.com/
+TEST_BROWSER := msedge
+TEST_TAGS :=
+
+
+# Inner vars
 SHELL := /bin/bash
 ESC = \x1b
 FEATURES_FOLDER := features
@@ -103,13 +109,13 @@ list: ## List all available tags under the feature files
 
 
 example: ## Show some example cases
-	@printf "$(F1) Example: $(LD) \n"
-	@echo "export MAUI_TEST_ENV=http://localhost:5000/"
-	@echo "export MAUI_TEST_BROWSER=msedge"
-	@echo "export MAUI_TEST_TAGS=playwright"
-	@echo "make run"
-	@printf "$(FF) OR: $(LD) \n"
-	@echo "MAUI_TEST_ENV=http://localhost:5000/ MAUI_TEST_BROWSER=msedge MAUI_TEST_TAGS=playwright make run"
+	@printf "$(F3)Example: $(LD) \n"
+	@printf "$(F6) export$(LD) TEST_SITE=http://localhost:5000/ \n"
+	@printf "$(F6) export$(LD) TEST_BROWSER=msedge \n"
+	@printf "$(F6) export$(LD) TEST_TAGS=open \n"
+	@printf "$(F6) make $(LD)run \n"
+	@printf "$(FF)OR: $(LD) \n"
+	@printf " TEST_SITE=http://localhost:5000 $(F6)make$(LD) run \n"
 
 
 help:
