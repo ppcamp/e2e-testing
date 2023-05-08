@@ -1,7 +1,7 @@
 package main
 
 import (
-	"os"
+	"fmt"
 	"testing"
 
 	"github.com/ppcamp/e2e-testing/config"
@@ -11,8 +11,10 @@ import (
 	"github.com/spf13/pflag"
 )
 
+var opts godog.Options
+
 func TestMain(m *testing.M) {
-	opts := godog.Options{
+	opts = godog.Options{
 		Format:      "pretty",
 		Paths:       []string{"features"},
 		Concurrency: int(config.Concurrency),
@@ -24,22 +26,7 @@ func TestMain(m *testing.M) {
 
 	opts.Paths = pflag.Args()
 
-	logrus.WithFields(logrus.Fields{
-		"Concurrency":   opts.Concurrency,
-		"Paths":         opts.Paths,
-		"Format":        opts.Format,
-		"Tags":          opts.Tags,
-		"StopOnFailure": opts.StopOnFailure,
-	}).Info("Initializing tests")
-
-	_ = godog.TestSuite{
-		ScenarioInitializer: InitializeScenario,
-		Options:             &opts,
-	}.Run()
-
 	_ = m.Run()
-
-	os.Exit(0)
 
 	// To use the tests status ()
 	// status := godog.TestSuite{
@@ -51,4 +38,32 @@ func TestMain(m *testing.M) {
 	// 	status = st
 	// }
 	// os.Exit(status)
+}
+
+func TestFeatures(t *testing.T) {
+	if config.IsTest {
+		fmt.Println("test")
+		t.Skip()
+	}
+
+	logrus.WithFields(logrus.Fields{
+		"Concurrency":   opts.Concurrency,
+		"Paths":         opts.Paths,
+		"Format":        opts.Format,
+		"Tags":          opts.Tags,
+		"StopOnFailure": opts.StopOnFailure,
+	}).Info("Initializing tests")
+
+	status := godog.TestSuite{
+		ScenarioInitializer: InitializeScenario,
+		Options:             &opts,
+	}.Run()
+
+	if status == 2 {
+		t.SkipNow()
+	}
+
+	if status != 0 {
+		t.Errorf("zero status code expected, %d received", status)
+	}
 }

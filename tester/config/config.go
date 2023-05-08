@@ -14,6 +14,7 @@ var (
 	Browser          string = "chrome"
 	Headless         bool   = false
 	ScreenShotFolder string = "../images"
+	IsTest           bool   = false
 )
 
 func init() {
@@ -36,9 +37,19 @@ func readEnv() {
 		Browser = v
 	}
 
+	if v, ok := os.LookupEnv(`TEST_SCREENSHOT_FOLDER`); ok {
+		ScreenShotFolder = v
+	}
+
 	if v, ok := os.LookupEnv(`TEST_HEADLESS`); ok {
 		if vparsed, err := strconv.ParseBool(strings.Trim(v, " ")); err == nil {
 			Headless = vparsed
+		}
+	}
+
+	if v, ok := os.LookupEnv(`TEST_IS_TEST`); ok {
+		if vparsed, err := strconv.ParseBool(strings.Trim(v, " ")); err == nil {
+			IsTest = vparsed
 		}
 	}
 

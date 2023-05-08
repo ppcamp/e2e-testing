@@ -7,6 +7,8 @@ export TEST_HEADLESS := false
 export TEST_THREAD := 0 # 0 == 1 == No thread
 export TEST_TAGS :=
 export TEST_OUT_JSON := report.json
+export TEST_SCREENSHOT_FOLDER := ../images
+export TEST_IS_TEST := false
 
 
 # Inner vars
@@ -81,7 +83,7 @@ check_bash_version:
 
 install: install-go ## Install [everything]
 install-go: install-go-pkgs install-go-extra-deps
-run: drop_files go_run ## Run the tests
+test: go_test ## Run the unitary tests
 
 
 .ONESHELL:
@@ -111,6 +113,23 @@ go_run: ## Run the godog test suite. Type `make example`.
 drop_files:
 	@rm -f $(TEST_OUT_JSON)
 
+
+.ONESHELL:
+go_test: ## [GO] run unitary tests
+    # 1. run tests
+    # 2. remove spaces and [-=]
+    # 3. trim spaces
+    # 4. colour faint RUN
+    # 5. colour PASS
+    # 6. colour FAIL
+	@printf "Running Go tests\n"
+	@cd $(TESTER_FOLDER)
+	@TEST_IS_TEST=true go test -v ./... | \
+		sed -En 's/^(\s*[-=]*)*(.*)/\2/g;p' | \
+		sed -En 's/\s{2,}/ /g;p' | \
+		sed -En 's/^RUN/$(F0)\0$(LD)/g;p' | \
+		sed -En 's/^PASS:/  $(F2)PASS:$(LD)/g;p' | \
+		sed -En 's/^FAIL/ $(F1)PASS$(LD)/g;p'
 
 .ONESHELL:
 list: ## List all available tags under the feature files
