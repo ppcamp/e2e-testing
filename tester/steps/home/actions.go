@@ -1,4 +1,4 @@
-package login
+package home
 
 import (
 	"fmt"

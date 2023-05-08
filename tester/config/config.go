@@ -7,7 +7,7 @@ import (
 
 var (
 	Concurrency uint32 = 0
-	SiteURL     string = ""
+	SiteURL     string = "https://www.google.com"
 	Browser     string = "chrome"
 	Headless    bool   = false
 )
