@@ -1,12 +1,12 @@
 default: check_bash_version help
 
 # Env
-TEST_SITE := https://www.globo.com/
-TEST_BROWSER := msedge
-TEST_HEADLESS := true
-TEST_THREAD := 1
-TEST_TAGS :=
-TEST_OUT_JSON := report.json
+export TEST_SITE := https://www.google.com/
+export TEST_BROWSER := msedge
+export TEST_HEADLESS := true
+export TEST_THREAD := 1
+export TEST_TAGS :=
+export TEST_OUT_JSON := report.json
 
 
 # Inner vars
