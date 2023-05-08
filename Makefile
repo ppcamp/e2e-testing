@@ -1,18 +1,18 @@
 default: check_bash_version help
 
 # Env
-export TEST_SITE := https://www.google.com/
-export TEST_BROWSER := msedge
-export TEST_HEADLESS := false
-export TEST_THREAD := 0 # 0 == 1 == No thread
-export TEST_TAGS :=
-export TEST_OUT_JSON := report.json
-export TEST_SCREENSHOT_FOLDER := ../images
-export TEST_IS_TEST := false
-export TEST_LOG_LEVEL := error
+export TEST_SITE ?= https://www.google.com/
+export TEST_BROWSER ?= msedge
+export TEST_HEADLESS ?= false
+export TEST_THREAD ?= 0 # 0 == 1 == No thread
+export TEST_TAGS ?=
+export TEST_OUT_JSON ?= report.json
+export TEST_SCREENSHOT_FOLDER ?= ../images
+export TEST_IS_TEST ?= false
+export TEST_LOG_LEVEL ?= error
 # Wsl seems to use wayland for ubuntu, but this seems to fail for chromium
 # see https://github.com/microsoft/WSL/issues/7896#issuecomment-1264252335
-export TEST_CHROMIUM_ARGS := $(shell [ "$$(grep -i WSL /proc/version)" ] && echo '--enable-features=UseOzonePlatform --ozone-platform=wayland')
+export TEST_CHROMIUM_ARGS ?= $(shell [ "$$(grep -i WSL /proc/version)" ] && echo '--enable-features=UseOzonePlatform --ozone-platform=wayland')
 
 
 # Inner vars
@@ -107,7 +107,7 @@ install-go-extra-deps: ## [GO] install all dependencies packages (*tools*)
 
 .ONESHELL:
 go_run: ## [GO] Run the godog test suite. Type `make example`.
-	@printf "Running Go test suite: $(FEATURES_FOLDER)/$(TEST_TAGS)\n\n"
+	@printf "Running Go test suite: $(FEATURES_FOLDER)/$(TEST_TAGS) using $(TEST_THREAD) threads \n\n"
 	@cd $(TESTER_FOLDER)
 	@go test \
 		-timeout 0 \
