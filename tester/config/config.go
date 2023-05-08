@@ -3,10 +3,11 @@ package config
 import (
 	"os"
 	"strconv"
+	"strings"
 )
 
 var (
-	Concurrency uint32 = 0
+	Concurrency uint32 = 0 // 0 also evals to 1
 	SiteURL     string = "https://www.google.com"
 	Browser     string = "chrome"
 	Headless    bool   = false
@@ -28,13 +29,13 @@ func readEnv() {
 	}
 
 	if v, ok := os.LookupEnv(`TEST_HEADLESS`); ok {
-		if vparsed, err := strconv.ParseBool(v); err == nil {
+		if vparsed, err := strconv.ParseBool(strings.Trim(v, " ")); err == nil {
 			Headless = vparsed
 		}
 	}
 
 	if v, ok := os.LookupEnv(`TEST_THREAD`); ok {
-		if vparsed, err := strconv.ParseUint(v, 10, 32); err == nil {
+		if vparsed, err := strconv.ParseUint(strings.Trim(v, " "), 10, 32); err == nil {
 			Concurrency = uint32(vparsed)
 		}
 	}

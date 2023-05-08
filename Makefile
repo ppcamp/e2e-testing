@@ -3,8 +3,8 @@ default: check_bash_version help
 # Env
 export TEST_SITE := https://www.google.com/
 export TEST_BROWSER := msedge
-export TEST_HEADLESS := true
-export TEST_THREAD := 1
+export TEST_HEADLESS := false
+export TEST_THREAD := 0 # 0 == 1 == No thread
 export TEST_TAGS :=
 export TEST_OUT_JSON := report.json
 
