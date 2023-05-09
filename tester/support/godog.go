@@ -3,15 +3,12 @@ package support
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/cucumber/godog"
 	"github.com/ppcamp/e2e-testing/config"
 	log "github.com/sirupsen/logrus"
 )
-
-type StepFunc func(Reporter) error
-
-type godogStepFunc func(ctx context.Context) error
 
 // Setup the before and after functions for scenarios and steps
 func Setup(ctx *godog.ScenarioContext) {
@@ -33,7 +30,7 @@ func Setup(ctx *godog.ScenarioContext) {
 			return ctx, fmt.Errorf("fail to retrieve reporter %w", err)
 		}
 
-		ScreenShot(r, fmt.Sprintf("%s/%s.png", config.ScreenShotFolder, sc.Id))
+		ScreenShot(r, fmt.Sprintf("%s/%s_%s.png", config.ScreenShotFolder, sc.Id, strings.ReplaceAll(sc.Name, " ", "")))
 
 		if err2 := r.CloseAll(); err2 != nil {
 			return ctx, err2

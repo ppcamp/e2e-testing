@@ -11,8 +11,8 @@ const (
 	xpathTextfield string = `//*[@type='search']`
 )
 
-// launchHomePage and await until network kiddle event
-func launchHomePage(reporter support.Reporter) error {
+// iLaunchTheHomePage and await until network kiddle event
+func iLaunchTheHomePage(reporter support.Reporter) error {
 	if err := reporter.Get(config.SiteURL); err != nil {
 		return fmt.Errorf("couldn't navigate to login url: %v", err)
 	}
@@ -20,9 +20,7 @@ func launchHomePage(reporter support.Reporter) error {
 	return nil
 }
 
-func enterWithText(reporter support.Reporter) error {
-	textInput := `google`
-
+func iEnterWithText(reporter support.Reporter, textInput string) error {
 	locator, err := reporter.Locator(xpathTextfield)
 	if err != nil {
 		return err
@@ -31,18 +29,7 @@ func enterWithText(reporter support.Reporter) error {
 	return locator.Type(textInput)
 }
 
-func enterWithTextGlobo(reporter support.Reporter) error {
-	textInput := `globo`
-
-	locator, err := reporter.Locator(xpathTextfield)
-	if err != nil {
-		return err
-	}
-
-	return locator.Type(textInput)
-}
-
-func clickButton(reporter support.Reporter) error {
+func iHitTheSearchButton(reporter support.Reporter) error {
 	xpathButton := `//*[@value="Pesquisa Google"]`
 
 	return reporter.Click(xpathButton)

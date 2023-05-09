@@ -3,11 +3,13 @@ package support
 import (
 	"context"
 	"fmt"
+
+	"golang.org/x/exp/constraints"
 )
 
-var ReporterKey = reporterType{}
+var reporterKey = reporterSymbol{}
 
-type reporterType struct{}
+type reporterSymbol struct{}
 
 // contextWithReporter creates a new reporter and returns a new context with this value embeded
 func contextWithReporter(ctx context.Context) (context.Context, error) {
@@ -17,12 +19,12 @@ func contextWithReporter(ctx context.Context) (context.Context, error) {
 	}
 
 	reporter := &implReporter{instance.page, instance.browser, instance.pw}
-	return context.WithValue(ctx, ReporterKey, reporter), nil
+	return context.WithValue(ctx, reporterKey, reporter), nil
 }
 
 // fromContext will try to get the Reporter from the current context
 func fromContext(ctx context.Context) (Reporter, error) {
-	value := ctx.Value(ReporterKey)
+	value := ctx.Value(reporterKey)
 	v, ok := value.(Reporter)
 	if !ok {
 		return nil, fmt.Errorf("fail to cast to reporter interface")
@@ -32,7 +34,7 @@ func fromContext(ctx context.Context) (Reporter, error) {
 
 // WithReporter is a decorator used to retrieve Reporter from the context and pass it as argument
 // to the step functions.
-func WithReporter(fn StepFunc) godogStepFunc {
+func WithReporter(fn func(reporter Reporter) error) func(ctx context.Context) error {
 	return func(ctx context.Context) error {
 		reporter, err := fromContext(ctx)
 		if err != nil {
@@ -42,9 +44,14 @@ func WithReporter(fn StepFunc) godogStepFunc {
 	}
 }
 
-// WithoutParam is a decorator to ignore the ctx parameter
-func WithoutParam(fn func() error) godogStepFunc {
-	return func(_ context.Context) error {
-		return fn()
+// WithReporter is a decorator used to retrieve Reporter from the context and pass it as argument
+// to the step functions.
+func WithReporterT[T constraints.Ordered](fn func(reporter Reporter, extra T) error) func(ctx context.Context, extra T) error {
+	return func(ctx context.Context, extra T) error {
+		reporter, err := fromContext(ctx)
+		if err != nil {
+			return err
+		}
+		return fn(reporter, extra)
 	}
 }

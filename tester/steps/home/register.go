@@ -2,13 +2,12 @@ package home
 
 import (
 	"github.com/cucumber/godog"
-	"github.com/ppcamp/e2e-testing/support"
+	s "github.com/ppcamp/e2e-testing/support"
 )
 
 func Register(ctx *godog.ScenarioContext) {
-	ctx.Step(`^I launch the home page$`, support.WithReporter(launchHomePage))
-	ctx.Step(`^I enter with text globo$`, support.WithReporter(enterWithTextGlobo))
-	ctx.Step(`^I enter with text msn$`, support.WithReporter(enterWithText))
-	ctx.Step(`^I hit the search button$`, support.WithReporter(clickButton))
-	ctx.Step(`^Verify the page title`, support.WithReporter(verifyTitle))
+	ctx.Step(`^I launch the home page$`, s.WithReporter(iLaunchTheHomePage))
+	ctx.Step(`^I enter with text ([\w\s]+)$`, s.WithReporterT(iEnterWithText))
+	ctx.Step(`^I hit the search button$`, s.WithReporter(iHitTheSearchButton))
+	ctx.Step(`^Verify the page title`, s.WithReporter(verifyThePageTitle))
 }
