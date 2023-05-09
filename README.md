@@ -7,6 +7,19 @@ scenario without impact your current tests.
 >> R.: We want to each scenario be completely independent, avoiding possible errors with cookies
 >> and caches.
 
+
+Unfortunately, this approach crop some part of the godog implementation. In the original godog
+step function, the closure can have several parameters, which one of those can be of a different type. Of course, you can always use reflection and Generic to keep the original features, although, I'm not going to do that.
+
+```go
+// [ORIGINAL]
+// ctx.Step(`^I have ([\d]+) ([\w]+) at ([0-9.]+)`)
+func iDoSomething(ctx context.Context, groupA int, groupB string, groupC float32) error {}
+
+// meanwhile, this package allows to have just a single group
+```
+
+
 ## How to run?
 
 Type `make` or `make help` to see the available commands.
